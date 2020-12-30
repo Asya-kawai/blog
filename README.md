@@ -1,4 +1,4 @@
-# What's is this?
+# What is this?
 
 The repository to store raw data for my blog.
 
