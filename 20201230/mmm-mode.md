@@ -184,9 +184,9 @@ Emacsで vue.js を書く際に、`vue-mode` を利用するのが楽。
 styleセクションにてlangがどの位置であっても対応可能なように `:front` を設定した。
 
 
-Typescriptモードのインデント問題について。
+### jsのインデント崩れ対応
 
-次の設定を入れないと `vue-mode` にて適切なインデントにならなかったので設定。
+次の設定を入れないと `vue-mode` のjsセクションにて適切なインデントにならなかったので設定。
 
 ```
 (setq mmm-js-mode-enter-hook (lambda () (setq syntax-ppss-table nil)))
@@ -195,6 +195,42 @@ Typescriptモードのインデント問題について。
 
 [Emacs 26.3 で vue-mode の js パートのインデントが効かなくなる件の対処法](https://qiita.com/akicho8/items/58c2ac5d762a2a4479c6)
 を参考にした。
+
+### Typescript-mode
+
+```
+;;; --- typescript mode
+(use-package typescript-mode
+  :ensure t
+  :config
+  (setq typescript-indent-level 2)
+  (add-to-list 'auto-mode-alist '("\\.ts\\'" . typescript-mode)))
+;; need to install company and tide.
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (typescript-mode . company-mode)
+         (typescript-mdoe . flycheck-mode)
+         (typescript-mode . eldoc-mode)
+         (typescript-mode . lsp-deferred)
+         (before-save . tide-format-before-save))
+  :config
+  (setq flycheck-check-syntax-automatically '(save mode-enabled)))
+```
+
+ここも `vue-mode` 同様に特に言及することは特にないかな？
+
+Emacs にて、 `typescript` を書く時は、[tide](https://github.com/ananthakumaran/tide) を利用すると吉。
+
+この `tide` の設定もどこかを参考に色々設定したんだが、昔のことで忘れてしまった。
+
+### 全体の設定
+
+自身の `init.el` は[こちら](https://github.com/Asya-kawai/emacs_settings)。
+
+全体が見たい方はどうぞ（ `lsp` 周りを解説していないので、分からなければ参考に）。
 
 # 課題
 
