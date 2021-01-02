@@ -33,6 +33,11 @@ Emacsで開発する場合、特に何も設定しなければ
 外部のパッケージが気に入らなければ、[add-node-modules-path](https://github.com/codesuki/add-node-modules-path) 
 を参考に自身で作成してみてもいいだろう。
 
+なお、`use-package` ではなく、`leaf` を利用している方もいるだろう。
+
+leafの場合は、[こちらのサイト-My Emacs Configuration](https://mopemope.com/emacs-config/)がとても参考になる。
+
 # 参考
 
 * [add-node-modules-path](https://github.com/codesuki/add-node-modules-path) 
+* [My Emacs Configuration](https://mopemope.com/emacs-config/)
