@@ -88,6 +88,7 @@ cat pkg.list | xargs -I{} apt download {}
 ```
 for i in $(ls *.deb); do dpkg-deb -x $i . ; done
 sudo cp -a ./bin/* /bin/.
+sudo chown -R root:root /bin/* 
 ```
 
 # 追記
