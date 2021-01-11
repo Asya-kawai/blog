@@ -55,8 +55,8 @@ docker cp a315872a25bb:/bin /home/toshiki/bin-tmp
 その後、持ち主を`root`に変え、`/bin` にコピーする。
 
 ```
-sudo /home/toshiki/bin-tmp/chown root:root /home/toshiki/bin-tmp/*
-sudo /home/toshiki/bin-tmp/cp -r /bin
+sudo /home/toshiki/bin-tmp/chown -R root:root /home/toshiki/bin-tmp/*
+sudo /home/toshiki/bin-tmp/cp -a /home/toshiki/bin-tmp /bin
 ```
 
 この後でちゃんとdpkg等で必要なパッケージインストールしてあげないと、systemdとか入ってこない。
@@ -87,8 +87,13 @@ cat pkg.list | xargs -I{} apt download {}
 
 ```
 for i in $(ls *.deb); do dpkg-deb -x $i . ; done
-sudo cp -r ./bin/* /bin/.
+sudo cp -a ./bin/* /bin/.
 ```
+
+# 追記
+
+`bin` 内のプログラムをコピーする際に、最初は `cp -r` でやっていたんだけど、@hiroseyuuji 先生にハードリンクがうまくコピーできない点をご指摘頂いて、
+`cp -r` を `cp -a` に修正。
 
 # 参考
 
