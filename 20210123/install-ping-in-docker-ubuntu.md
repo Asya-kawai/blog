@@ -62,6 +62,14 @@ root@local-control-plane:/#
 
 なお、この背景としては、手元にて [kind](https://kind.sigs.k8s.io/) にて構築したk8sの`ClusterIP` への疎通確認。
 
+で、この `ClusterIP` （裏では `nginx-ingress` が動作）にアクセスしたかったというわけ。
+
+```
+kubectl get service
+NAME                                 TYPE           CLUSTER-IP      EXTERNAL-IP   PORT(S)                      AGE
+ingress-nginx-controller             LoadBalancer   10.96.3.59      <pending>     80:31521/TCP,443:31386/TCP   21m
+```
+
 やりたかったことは、以下のようなこと（ちゃんとできた）。
 
 ```
