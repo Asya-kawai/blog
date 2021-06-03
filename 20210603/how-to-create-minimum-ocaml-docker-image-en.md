@@ -133,7 +133,6 @@ We will create a sample application using the `cohttp` library (module).
 
 ``` 
 open Lwt
-open Lwt
 open Cohttp
 open Cohttp_lwt_unix
 
@@ -201,7 +200,7 @@ RUN set -x && \
     eval $(opam env) && \
     : "Build applications" && \
     dune build main.exe && \
-    sudo cp . /_build/default/main.exe /usr/bin/main.exe
+    sudo cp ./_build/default/main.exe /usr/bin/main.exe
 
 # --- #
 
@@ -211,12 +210,12 @@ COPY --from=ocaml-app-base /usr/bin/main.exe /home/app/main.exe
 RUN set -x && \
     : "Create a user to execute application" && \
     adduser -D app && \
-    chown app:app /home/app/main.exe
+    : "Change owner to app" && \
     chown app:app /home/app/main.exe
 
 WORKDIR /home/app
 USER app
-ENTRYPOINT ["/home/app/main.exe"].
+ENTRYPOINT ["/home/app/main.exe"]
 ```
 
 Put this `Dockerfile`, the `dune` file created in the previous chapter, and `main.ml` in the same directory.
