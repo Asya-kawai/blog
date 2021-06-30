@@ -196,7 +196,7 @@ FROM init-opam AS ocaml-app-base
 COPY . .
 RUN set -x && \
     : "Install related pacakges" && \
-    opam install -y dune lwt cohttp-lwt-unix yojson && \
+    opam install . --deps-only --locked && \
     eval $(opam env) && \
     : "Build applications" && \
     dune build main.exe && \
@@ -218,10 +218,38 @@ USER app
 ENTRYPOINT ["/home/app/main.exe"]
 ```
 
+This time, we decided to use a lock file to manage the packages that depend on this program.
+
+Create a file `dune-project`, and describe the packages that this program uses in the file.
+
+The contents of `dune-project` are as follows.
+
+```
+(lang dune 2.7)
+(name main)
+(version 1.0.0)
+
+(generate_opam_files true)
+
+(license MIT)
+(authors "Toshiki Kawai")
+(maintainers "Toshiki Kawai")
+
+(package
+  (name main)
+  (synopsis "The First architecture on OCaml")
+  (description "The First architecture style when startup project.") 
+  (depends
+    (dune (> 1.5))
+    (lwt (>= 5.4.0))
+    (cohttp-lwt-unix (>= 4.0.0))
+    (yojson (>= 1.7.0))))
+```
+
 Put this `Dockerfile`, the `dune` file created in the previous chapter, and `main.ml` in the same directory.
 
 ```
-Dockerfile dune main.ml
+Dockerfile dune dune-project main.ml
 ```
 
 Then, run `docker build .` command to create a Docker container image.

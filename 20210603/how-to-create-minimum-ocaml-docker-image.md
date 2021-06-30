@@ -198,7 +198,7 @@ FROM init-opam AS ocaml-app-base
 COPY . .
 RUN set -x && \
     : "Install related pacakges" && \
-    opam install -y dune lwt cohttp-lwt-unix yojson && \
+    opam install . --deps-only --locked && \
     eval $(opam env) && \
     : "Build applications" && \
     dune build main.exe && \
@@ -220,10 +220,38 @@ USER app
 ENTRYPOINT ["/home/app/main.exe"]
 ```
 
-この`Dockerfile`と前章で作成した`dune`ファイル、`main.ml`を同一ディレクトリに配置する。
+[追記 2021/06/29] なお、今回はロックファイルを利用して本プログラムに依存するパッケージを管理することにした。
+
+`dune-project`というファイルを作成し、その中に本プログラムが利用するパッケージを記載する。
+
+`dune-project`の内容は以下のとおりとなる。
 
 ```
-Dockerfile dune main.ml
+(lang dune 2.7)
+(name main)
+(version 1.0.0)
+
+(generate_opam_files true)
+
+(license MIT)
+(authors "Toshiki Kawai")
+(maintainers "Toshiki Kawai")
+
+(package
+  (name main)
+  (synopsis "The First architecture on OCaml")
+  (description "The First architecture style when startup project.") 
+  (depends
+    (dune (> 1.5))
+    (lwt (>= 5.4.0))
+    (cohttp-lwt-unix (>= 4.0.0))
+    (yojson (>= 1.7.0))))
+```
+
+この`dune-project`及び`Dockerfile`と前章で作成した`dune`ファイル、`main.ml`を同一ディレクトリに配置する。
+
+```
+Dockerfile dune dune-project main.ml
 ```
 
 そして、`docker build .`コマンドを実行し、Dockerコンテナイメージを作成する。
