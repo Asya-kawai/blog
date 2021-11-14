@@ -210,6 +210,9 @@ FROM alpine AS ocaml-app
 
 COPY --from=ocaml-app-base /usr/bin/main.exe /home/app/main.exe
 RUN set -x && \
+    : "Update and upgrade default packagee" && \
+    apk update && apk upgrade && \
+    apk add gmp-dev && \
     : "Create a user to execute application" && \
     adduser -D app && \
     : "Change owner to app" && \
