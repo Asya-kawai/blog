@@ -224,6 +224,9 @@ ENTRYPOINT ["/home/app/main.exe"]
 
 `dune-project`というファイルを作成し、その中に本プログラムが利用するパッケージを記載する。
 
+`dune-project`に`(generate_opam_files true)`及び`(package ...)`が含まれていれば、
+`dune build @install`コマンドにて、`パッケージ名.opam`ファイルを自動で生成する。
+
 `dune-project`の内容は以下のとおりとなる。
 
 ```
@@ -247,6 +250,17 @@ ENTRYPOINT ["/home/app/main.exe"]
     (cohttp-lwt-unix (>= 4.0.0))
     (yojson (>= 1.7.0))))
 ```
+
+`dune-project`から`.opam`ファイルを作成するには、下記のコマンドを実行する。
+
+なお、ここで生成されるファイル名は、`main.opam`となる。
+
+```
+dune build @install
+```
+
+以降は、Dockerfileに記載しているように、
+`opam install . --deps-only --locked`を利用して依存パッケージ群をインストールできる。
 
 この`dune-project`及び`Dockerfile`と前章で作成した`dune`ファイル、`main.ml`を同一ディレクトリに配置する。
 

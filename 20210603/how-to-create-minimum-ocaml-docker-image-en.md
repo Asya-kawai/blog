@@ -218,9 +218,12 @@ USER app
 ENTRYPOINT ["/home/app/main.exe"]
 ```
 
-This time, we decided to use a lock file to manage the packages that depend on this program.
+[2021/06/29] This time, we decided to use a lock file to manage the packages that depend on this program.
 
 Create a file `dune-project`, and describe the packages that this program uses in the file.
+
+If your `dune-project` contains `(generate_opam_files true)` and `(package ...)`, 
+The `dune build @install` command will automatically generate `package_name.opam` files.
 
 The contents of `dune-project` are as follows.
 
@@ -245,6 +248,16 @@ The contents of `dune-project` are as follows.
     (cohttp-lwt-unix (>= 4.0.0))
     (yojson (>= 1.7.0))))
 ```
+
+To create an `.opam` file from `dune-project`, execute the following command.
+
+The file name generated here will be `main.opam`.
+
+```
+dune build @install
+``` 
+
+After that, you can use the command `opam install . --deps-only --locked` as described in the Dockerfile to install a group of dependent packages.
 
 Put this `Dockerfile`, the `dune` file created in the previous chapter, and `main.ml` in the same directory.
 
