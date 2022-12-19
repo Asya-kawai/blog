@@ -40,7 +40,7 @@ SlackのSATySFiコミュニティ`satysfi.slack.com`で質問をしたところ�
     let bb = line-break false false ctx (inline-frame-breakable no-pads (Annot.register-location-frame label) (location-frame key-pdf-loc (ib-num ++ inline-fil ++ ib-title ++ inline-fil))) in bb +++ block-skip 36pt in
   ...
 ```
-`annot`パッケージの`register-location-frame`を用いてChapterへのジャンプ先を`label`で登録するようにした。
+のように、`annot`パッケージの`register-location-frame`を用いてChapterへのジャンプ先を`label`で登録するようにした。
 
 次に目次を生成するコマンドである`bb-toc`について
 
@@ -68,7 +68,7 @@ SlackのSATySFiコミュニティ`satysfi.slack.com`で質問をしたところ�
 
 同様に`register-location-frame`と`link-to-location-frame`を用いて、目次のSection（SubSectionを含む）にハイパーリンクを付けることが可能だ。
 
-具体的なソースコードは[Github.com - Basic-of-programming-on-ocaml](https://github.com/Asya-kawai/basic-of-programming-on-ocaml)の`boo-class.satyh`を参照されたい。
+具体的なソースコードは[Github.com - Basic-of-programming-on-ocaml](https://github.com/Asya-kawai/basic-of-programming-on-ocaml)の`book-class.satyh`を参照されたい。
 
 # まとめ
 
