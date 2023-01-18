@@ -134,7 +134,7 @@ Ind(C, F) = &cap;{V | V &sube; U, C &sube; V, F(V) &sube; V}
 自然数で添字付けられた無限列（集合系列） {X<sub>n</sub> | n = 0,1,...,n} を以下のとおり定義する。
 
 X<sub>0</sub> = C
-X<sub>i+1</sub> = X<sub>i</sub> &cup; F(X) (i &ge; 0)
+X<sub>i+1</sub> = X<sub>i</sub> &cup; F(X) (0 &le; i)
 
 上記のX<sub>0</sub>は定数Cを表す。
 X<sub>i+1</sub>は、1つ前の値であるX<sub>i</sub>とF(X<sub>i</sub>)（つまり関数集合Fに属するfにX<sub>i</sub>を適用して得られる全ての値）の和集合を表す。
@@ -142,7 +142,7 @@ X<sub>i+1</sub>は、1つ前の値であるX<sub>i</sub>とF(X<sub>i</sub>)（�
 
 この集合系列のもとで、Ind(C, F)は以下のように定義できる。
 
-Ind(C, F) = &cup; {X<sub>i</sub> | i &ge; 0}
+Ind(C, F) = &cup; {X<sub>i</sub> | 0 &le; i}
 
 （それはそうか、という感じだ（？）。いや、証明が必要らしいが。）
 
@@ -150,8 +150,8 @@ Ind(C, F) = &cup; {X<sub>i</sub> | i &ge; 0}
 
 性質2を証明するにはどのようにすれば良いか。以下の2つを証明すれば良い。
 
-1. Ind(C, F) &sube; &cup; {X<sub>i</sub> | i &ge; 0}
-2. &cup; {X<sub>i</sub> | i &ge; 0} &sube; Ind(C, F)
+1. Ind(C, F) &sube; &cup; {X<sub>i</sub> | 0 &le; i}
+2. &cup; {X<sub>i</sub> | 0 &le; i} &sube; Ind(C, F)
 
 
 
