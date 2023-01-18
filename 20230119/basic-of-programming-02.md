@@ -117,7 +117,7 @@ e ::= x | c^b | (lambda x.e) | (e e)
 
 *帰納的閉包の性質1*
 
-そもそもInd(C, F)つまり集合Cを含み関数集合Fに関して閉じている最小の集合というものは存在するのだろうか（直感的には存在するとは思うが）。
+そもそもInd(C, F)つまり集合Cを含み関数集合Fに関して閉じている最小の集合というものは存在するのだろうか（直感的には存在するとは思うが、確認することが大事だ）。
 
 そこでXを 空でない集合の集まり（集合）とし、以下の演算を定義する。
 
@@ -152,7 +152,7 @@ X<sub>i+1</sub>は、1つ前の値であるX<sub>i</sub>とF(X<sub>i</sub>)（�
 
 Ind(C, F) = &cup; {X<sub>i</sub> | 0 &le; i}
 
-（それはそうか、という感じだ（？）。いや、証明が必要らしいが。）
+（それはそうか、という感じもするが、証明が必要だ）
 
 *性質2の証明*
 
@@ -221,7 +221,7 @@ F<sub>&Lambda;<sub> = {f<sup>1</sup><sub>lambda x</sub> | x &isin; Var} &cup; {f
 
 同様に&Lambda;の要素を生成する操作という文脈においても別の見方ができる。
 
-&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;<sub>) = &cup; {X<sub>i</sub> | 0 &le; i}
+&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;</sub>) = &cup; {X<sub>i</sub> | 0 &le; i}
 
 * (Var &cup; Const)の要素を追加する
 * 全てのx, y &sube; &Lambda; に対して、f<sup>1</sup><sub>lambda x</sub>及びf<sup>2</sup><sub>app</sub>を追加する
