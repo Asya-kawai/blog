@@ -53,7 +53,7 @@ e ::= x | c^b | (lambda x.e) | (e e)
 * &Lambda;はxが代表する集合Varを含む
 * &Lambda;はcが代表する集合Constを含む
 * もし&Lambda;にeが含まれるのであれば、eを使った式も&Lambda;に含まれる
-* もしe1及びe2が&Lambda;に含まれるのであれば、(e1, e2)も&Lambda;に含まれる
+* もしe<sub>1</sub>及びe<sub>2</sub>が&Lambda;に含まれるのであれば、(e1, e2)も&Lambda;に含まれる
 * &Lambda;は以上の要素のみを含む
 
 またBNFから、&Lambda;を生成する以下の規則も見えてくる。  
@@ -76,7 +76,84 @@ e ::= x | c^b | (lambda x.e) | (e e)
 
 * A,A<sub>1</sub>...,A<sub>n</sub> を集合とする
 * 集合に対して以下の集合演算が可能である
-  * A<sub>1</sub>&otimes;...A<sub>x</sub> = {(a<sub>1</sub>,...,a<sub>n</sub>) | a<sub>i</sub>&isin;A<sub>i</sub> (1&le;i&le;n)}
+  * A<sub>1</sub> &otimes; ...A<sub>x</sub> = {(a<sub>1</sub>,...,a<sub>n</sub>) | a<sub>i</sub> &isin; A<sub>i</sub> (1 &le; i &le; n)}
+    * これはA<sub>1</sub>,...A<sub>n</sub>の直積を表す
+  * A<sup>n</sup> = A &otimes; ... &otimes; A
+    * これは集合Aのn次の直積を表す
+* 関数を代表するメタ変数fに対して、その定義域を dom(f) と表記する
+* Xがdom(f)の部分集合である時（すなわちX &sube; dom(f)の時）、集合{f(x) | x &isin; X}をf(X) と表記する
+* fのXへの制限すなわち定義域をXに制限した集合{(a, b) | (a, b) &isin; f, a &isin; X}で表される関数を、f|<sub>x</sub>と表記する
+* f|<sub>dom(f)\{x}</sub>すなわちXへの制限を取り除いたものをf|&not;xと表記する
+* 変数x<sub>1</sub>〜x<sub>n</sub>と対応する値v<sub>1</sub>〜v<sub>n</sub> (x<sub>i</sub> &ne; x<sub>j</sub>, 1 &le; i &le; j &le; n)に対して、f{x<sub>1</sub>:v<sub>1</sub>,...,x<sub>n</sub>:v<sub>n</sub>}は新たな関数f'を表す
+  * f'の定義域dom(f')について、dom(f') = dom(f) &cup; {x<sub>1</sub>,...,x<sub>n</sub>} となり
+  * 且つf'の値について、f'(y) = f(y) (y &ne; x<sub>i</sub>, 1 &le; i &le; n) または v<sub>i</sub> (y = x<sub>i</sub>)となる
+    * x<sub>i</sub>はdom(f)の定義であっても良い、そうでなければv<sub>i</sub>となるという意味
+
+次に、全体集合Uを置き、集合Fを f &isin; U<sup>n</sup> &rarr; U つまり、Uのn次の直積からUへの関数の集合と定義する。
+
+この時nをfのランクと言いrank(f)と書く。
+また、ランクがnであるFの要素をf<sup>r(n)</sup>と書く。
+
+ここで、Uに対する部分集合X（X &sube; U）に対して、{f<sup>r(n)</sup> (x<sub>1</sub>,...,x<sub>n</sub>) | x<sub>i</sub> &isin; X, f<sup>r(n)</sup> &isin; F} となる集合をF(X)と書く。  
+つまりF(X)は、関数集合Fに属するfについて、ランクnにx<sub>1</sub>〜x<sub>n</sub>（xはXの要素）を与えfに適用した結果を集めた集合である。  
+さらにF(X) &sube; X の時、すなわちXの要素(x<sub>i</sub>等)をfに適用した際にその結果がXの範囲に留まる時、「XはFに関して閉じている(Closed under F)」と言う。
+
+## 帰納的閉包
+
+部分集合C（C &sube; U）を与えられた集合とし、CのFに関する帰納的閉包を「集合Cを含みFに関して閉じている集合の最小のもの」と定義する。またこれを Ind(C, F)と書くことにする。
+
+ここで最小とは、集合の包含関係（例えば A &sube; B）に関して最小のもの、という意味である。
+
+この講義で言いたいことは「BNFを含む再帰的な規則で定義される集合は、帰納的閉包である（帰納的閉包で表される）」ということである。
+
+
+帰納的閉包の性質1
+
+そもそもInd(C, F)つまり集合Cを含み関数集合Fに関して閉じている最小の集合というものは存在するのだろうか（直感的には存在するとは思うが）。
+
+そこでXを 空でない集合の集まり（集合）とし、以下の演算を定義する。
+
+&cap; X = {a | Xの要素（実体は集合）である全てのY（&forall;Y &isin; X）について a &isin; Y}
+
+つまり上記の演算は、Xの全ての部分集合における共通集合を得ることになるため、必然的に最小の集合を得る演算となっている。
+
+さて、Uの部分集合C（C &sube; U）且つ F(U) &sube; U から、U自身はCを含み且つFに関して閉じた集合全体の集合はUの要素を含み空ではないことが分かる。  
+また、空ではない集合の集合Xについて &cap; X の演算を定義したことから、F(X)すなわちXがFに関して閉じている場合、&cap; X においてもFに関して閉じていると言える。
+
+したがって Ind(C, F)は確かに存在し以下のように定義できる。
+
+Ind(C, F) = &cap;{V | V &sube; U, C &sube; V, F(V) &sube; V}
+
+つまり Uの部分集合V（V &sube; U）は、Uの部分集合Cが含まれ且つFに関して閉じている全てのものの集まりであり、これに対して &cap; をとったものである。&cap; をとるというのは、Vにおける最小の集合を得ることであり、ここではCが最小の集合であるため、Ind(C, F)は確かに存在することが分かる。
+
+
+帰納的閉包の性質2
+
+ここでは、Ind(C, F)にどのような要素が含まれているかを確かめていく。
+
+自然数で添字付けられた無限列（集合系列） {X<sub>n</sub> | n = 0,1,...,n} を以下のとおり定義する。
+
+X<sub>0</sub> = C
+X<sub>i+1</sub> = X<sub>i</sub> &cup; F(X) (i &ge; 0)
+
+上記のX<sub>0</sub>は定数Cを表す。
+X<sub>i+1</sub>は、1つ前の値であるX<sub>i</sub>とF(X<sub>i</sub>)（つまり関数集合Fに属するfにX<sub>i</sub>を適用して得られる全ての値）の和集合を表す。
+つまり、上記の漸化式で表される集合系列は、添字の数を大きくなる毎にその集合自体も大きくなる。
+
+この集合系列のもとで、Ind(C, F)は以下のように定義できる。
+
+Ind(C, F) = &cup; {X<sub>i</sub> | i &ge; 0}
+
+（それはそうか、という感じだ（？）。いや、証明が必要らしいが。）
+
+性質2の証明
+
+性質2を証明するにはどのようにすれば良いか。以下の2つを証明すれば良い。
+
+1. Ind(C, F) &sube; &cup; {X<sub>i</sub> | i &ge; 0}
+2. &cup; {X<sub>i</sub> | i &ge; 0} &sube; Ind(C, F)
+
+
 
 # 参考
 
