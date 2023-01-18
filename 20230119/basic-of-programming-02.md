@@ -201,7 +201,7 @@ F<sub>&Lambda;<sub> = {f<sup>1</sup><sub>lambda x</sub> | x &isin; Var} &cup; {f
 
 ## BNFを帰納的閉包の文脈で見直してみる
 
-&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;<sub>) = &cap; {V | V &sube; U, (Var &cup; Const) &sube; V, F<sub>&Lambda;</sub>(V) &sube; V}
+&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;</sub>) = &cap; {V | V &sube; U, (Var &cup; Const) &sube; V, F<sub>&Lambda;</sub>(V) &sube; V}
 
 と考えると、&Lambda;は次の制約を満たすものであると定義できる。
 
