@@ -1,5 +1,13 @@
 # プログラミングの基礎理論 第2回 言語の機能的な定義
 
+Twitterにて[このようなツイート](https://twitter.com/AtsushiOhori/status/1614999135559757824?s=20&t=izl1aiC2jkmvU4B-4QFEew)を見かけたので、内容を確認してみた。
+
+これまでインターネットや書籍で軽く触れられてきた内容に切り込んでいくものだったので、理解を深めることができた。
+
+その内容をまとめていく。
+
+## 概要
+
 言語は文法で定義される。
 
 例えば、MLの一部の式は以下のように定義される。
@@ -107,7 +115,7 @@ e ::= x | c^b | (lambda x.e) | (e e)
 この講義で言いたいことは「BNFを含む再帰的な規則で定義される集合は、帰納的閉包である（帰納的閉包で表される）」ということである。
 
 
-帰納的閉包の性質1
+*帰納的閉包の性質1*
 
 そもそもInd(C, F)つまり集合Cを含み関数集合Fに関して閉じている最小の集合というものは存在するのだろうか（直感的には存在するとは思うが）。
 
@@ -127,7 +135,7 @@ Ind(C, F) = &cap;{V | V &sube; U, C &sube; V, F(V) &sube; V}
 つまり Uの部分集合V（V &sube; U）は、Uの部分集合Cが含まれ且つFに関して閉じている全てのものの集まりであり、これに対して &cap; をとったものである。&cap; をとるというのは、Vにおける最小の集合を得ることであり、ここではCが最小の集合であるため、Ind(C, F)は確かに存在することが分かる。
 
 
-帰納的閉包の性質2
+*帰納的閉包の性質2*
 
 ここでは、Ind(C, F)にどのような要素が含まれているかを確かめていく。
 
@@ -146,14 +154,87 @@ Ind(C, F) = &cup; {X<sub>i</sub> | 0 &le; i}
 
 （それはそうか、という感じだ（？）。いや、証明が必要らしいが。）
 
-性質2の証明
+*性質2の証明*
 
 性質2を証明するにはどのようにすれば良いか。以下の2つを証明すれば良い。
 
 1. Ind(C, F) &sube; &cup; {X<sub>i</sub> | 0 &le; i}
 2. &cup; {X<sub>i</sub> | 0 &le; i} &sube; Ind(C, F)
 
+1.については、次のステップで証明できる。
 
+1. &cup; {X<sub>i</sub> | 0 &le; i}がFに閉じていることを示す
+2. f<sup>r(n)</sup>をFの任意の要素とし、&cup; {X<sub>i</sub> | 0 &le; i}<sup>n<sup> （n次の直積）の任意の要素（
+実際はX<sub>i</sub>で表される要素の組）をxとする
+3. そのようなxをとった時、あるkが存在して x &isin; (X<sub>k</sub>)<sup>n</sup>であることを示す
+4. するとf<sup>r(n)</sup> &isin; X<sub>k+1</sub> &sube; &cup; {X<sub>i</sub> | 0 &le; i}である
+5. 同様にF(&cup; {X<sub>i</sub> | 0 &le; i}) &sube; &cup; {X<sub>i</sub> | 0 &le; i}である
+6. よってInd(C, F) &sube; &cup; {X<sub>i</sub> | 0 &le; i}である
+
+※ 2,3のステップが微妙に整理できていないかも？
+
+
+2.については、次のステップで説明できる。
+
+1. 定義よりX<sub>0</sub> = C &sube; Ind(C, F)である
+2. X<sub>i</sub> &sube; Ind(C, F)と仮定する
+3. Ind(C, F)はFに閉じているのだから、F(X<sub>i</sub>) &sube; Ind(C, F)である
+4. 定義よりX<sub>i+1</sub> = X<sub>i</sub> &cup; F(X<sub>i</sub>)であるから、X<sub>i+1</sub> &sube; Ind(C, F)である
+5. よって&cup; {X<sub>i</sub> | 0 &le; i} &sube; Ind(C, F)である
+
+## 帰納的閉包によるラムダ式の理解
+
+この講義で言いたいことは「BNFを含む再帰的な規則で定義される集合は、帰納的閉包である（帰納的閉包で表される）」ということであった。早速見ていこう。
+
+全体集合U（例えば構文木全体からなる集合等）を置き、ラムダ式の集合&Lambda;を帰納的閉包として定義する。
+なおこの時&Lambda;は全体集合Uの部分集合になっている、
+
+さて集合Varに対するメタ変数x（x &isin; Var）について、e（ラムダ式の集合&Lambda;に対するメタ変数）から (lambda x.e)を作る関数をf<sup>1</sup><sub>lambda x</sub>、e<sub>1</sub>及びe<sub>2</sub>から(e<sub>1</sub> e<sub>2</sub>)を作る関数をf<sup>2</sup><sub>app</sub>とすると、関数集合Fは以下のように定義できる。
+
+F<sub>&Lambda;<sub> = {f<sup>1</sup><sub>lambda x</sub> | x &isin; Var} &cup; {f<sup>2</sup><sub>app</sub>}
+
+するとラムダ式の集合&Lambda;は、以下のとおり定義できる。
+
+&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;<sub>)
+
+つまりX<sub>0</sub>に相当するVar及びConstの和集合から始まり、それらを用いて作成できる関数を要素に持つ集合Fに関して閉じている最小の集合を示している。
+
+## BNFを帰納的閉包の文脈で見直してみる
+
+&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;<sub>) = &cap; {V | V &sube; U, (Var &cup; Const) &sube; V, F<sub>&Lambda;</sub>(V) &sube; V}
+
+と考えると、&Lambda;は次の制約を満たすものであると定義できる。
+
+* (Var &cup; Const) &sube; V より&Lambda;は集合Varと集合Constを含む = (Var &cup; Const) &sube; &Lambda;
+* F<sub>&Lambda;</sub>(V) &sube; V よりF<sub>&Lambda;</sub>(&Lambda;) &sube; &Lambda;つまりf<sup>1</sup><sub>lambda x</sub>及びf<sup>2</sup><sub>app</sub>に関して閉じた集合である
+* 上記を満たす最小の集合である
+
+つまり、
+
+* &Lambda;はxが代表する集合Varを含む = Var &sube; &Lambda; である
+* &Lambda;はcが代表する集合Constを含む = Const &sube; &Lambda; である
+* もし&Lambda;にeが含まれるのであれば、eを使った式も&Lambda;に含まれる = もし e &sube; &Lambda; ならば (lambda x.e) &sube; &Lambda; である
+* もしe<sub>1</sub>及びe<sub>2</sub>が&Lambda;に含まれるのであれば、(e<sub>1</sub> e<sub>2</sub>)も&Lambda;に含まれる = もしe<sub>1</sub> &sube; &Lambda; 且つ e<sub>2</sub> &sube; &Lambda; ならば (e<sub>1</sub> e<sub>2</sub>) &sube; &Lambda; である
+* &Lambda;は以上の要素のみを含む ← これがはっきりとした！
+
+と言える。
+
+同様に&Lambda;の要素を生成する操作という文脈においても別の見方ができる。
+
+&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;<sub>) = &cup; {X<sub>i</sub> | 0 &le; i}
+
+* (Var &cup; Const)の要素を追加する
+* 全てのx, y &sube; &Lambda; に対して、f<sup>1</sup><sub>lambda x</sub>及びf<sup>2</sup><sub>app</sub>を追加する
+
+つまり
+
+* xと書いた場合、xが代表する集合Varを&Lambda;の要素に加える操作である
+* c^bと書いた場合、c^bが代表する集合Constを&Lambda;の要素に加える操作である
+* もしeが集合lambdaに含まれるなら、(lambda x.e)と書いた場合、これを&Lambda;に加える操作である
+* もしe<sub>1</sub>,e<sub>2</sub>が集合lambdaに含まれるなら、(e<sub>1</sub> e<sub>2</sub>)と書いた場合、これを&Lambda;に加える操作である
+* &Lambda;は異常の要素の生成を（無限に）繰り返して得られる集合である ← これがはっきりした！
+
+と言える。
 
 # 参考
 
