@@ -24,7 +24,7 @@ Twitterにて[このようなツイート](https://twitter.com/AtsushiOhori/stat
 
 ラムダ式では以下の集合とメタ変数を導入する。
 
-* 集合(Var)に対するメタ変数を`x`とする
+* 変数(Var)に対するメタ変数を`x`とする
 * 定数(Const)に対するメタ変数を`c^b`(c of b)とする
   * ※ b はint等の型を明示するためのもの
 
@@ -191,11 +191,11 @@ Ind(C, F) = &cup; {X<sub>i</sub> | 0 &le; i}
 
 さて集合Varに対するメタ変数x（x &isin; Var）について、e（ラムダ式の集合&Lambda;に対するメタ変数）から (lambda x.e)を作る関数をf<sup>1</sup><sub>lambda x</sub>、e<sub>1</sub>及びe<sub>2</sub>から(e<sub>1</sub> e<sub>2</sub>)を作る関数をf<sup>2</sup><sub>app</sub>とすると、関数集合Fは以下のように定義できる。
 
-F<sub>&Lambda;<sub> = {f<sup>1</sup><sub>lambda x</sub> | x &isin; Var} &cup; {f<sup>2</sup><sub>app</sub>}
+F<sub>&Lambda;</sub> = {f<sup>1</sup><sub>lambda x</sub> | x &isin; Var} &cup; {f<sup>2</sup><sub>app</sub>}
 
 するとラムダ式の集合&Lambda;は、以下のとおり定義できる。
 
-&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;<sub>)
+&Lambda; = Ind(Var &cup; Const, F<sub>&Lambda;</sub>)
 
 つまりX<sub>0</sub>に相当するVar及びConstの和集合から始まり、それらを用いて作成できる関数を要素に持つ集合Fに関して閉じている最小の集合を示している。
 
