@@ -164,7 +164,7 @@ Ind(C, F) = &cup; {X<sub>i</sub> | 0 &le; i}
 1.については、次のステップで証明できる。
 
 1. &cup; {X<sub>i</sub> | 0 &le; i}がFに閉じていることを示す
-2. f<sup>r(n)</sup>をFの任意の要素とし、&cup; {X<sub>i</sub> | 0 &le; i}<sup>n<sup> （n次の直積）の任意の要素（
+2. f<sup>r(n)</sup>をFの任意の要素とし、&cup; {X<sub>i</sub> | 0 &le; i}<sup>n</sup> （n次の直積）の任意の要素（
 実際はX<sub>i</sub>で表される要素の組）をxとする
 3. そのようなxをとった時、あるkが存在して x &isin; (X<sub>k</sub>)<sup>n</sup>であることを示す
 4. するとf<sup>r(n)</sup> &isin; X<sub>k+1</sub> &sube; &cup; {X<sub>i</sub> | 0 &le; i}である
