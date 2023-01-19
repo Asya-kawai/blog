@@ -1,4 +1,4 @@
-# プログラミングの基礎理論 第2回 言語の機能的な定義
+# プログラミングの基礎理論 第2回 言語の帰納的な定義
 
 Twitterにて[このようなツイート](https://twitter.com/AtsushiOhori/status/1614999135559757824?s=20&t=izl1aiC2jkmvU4B-4QFEew)を見かけたので、内容を確認してみた。
 
