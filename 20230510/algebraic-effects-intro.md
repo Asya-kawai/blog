@@ -169,7 +169,52 @@ try {
 
 そう、 **エフェクトを引き起こした箇所に戻ることができるのだ！**
 
-<!--## JavaScriptにおけるAlgebraic Effectsの考察-->
+## 備考
+
+Algebraic Effectsはうまく副作用を扱う機構であるためモナドと比較され、
+しばしば純粋関数型プログラミング特有のものかと思われるかもしれないが、そうではない。
+
+純粋でない関数型プログラミングや、他のパラダイムを持つ言語にとっても「何を」「どうやるか」が明確になるはずだ。
+
+```
+interface Dir {
+    Name: string;
+    // Others... ;
+}
+
+function enumerateFiles(dir: Dir) {
+    const contents = perform OpenDirectory(dir);        // 何を：ファイルを開く
+    perform Log('Enumerating files in ', dir);          // 何を：ログを記録する
+
+    contents.map(file => perform HandleFile(file));     // 何を：ファイルを操作する
+    perform Log('Enumerating subdirectories in ', dir); // 何を：ログを記録する
+
+    // We can use recursion or call other functions with effects
+    contents.dir.map(directory => enumerateFiles(directory));
+
+    perform Log('Done');                                // 何を：ログを記録する
+}
+
+try {
+    enumerateFiles('C:\\');
+} handle (effect) {
+    if (effect instanceof Log) {
+        myLoggingLibrary.log(effect.message);                    // どうやって：myLoggingLibrary.log関数を使って
+        resume;
+    } else if (effect instanceof OpenDirectory) {
+        myFileSystemImpl.openDir(effect.dirName, (contents) => { // どうやって：myFileSystemImpl.openDir関数を使って
+            resume with contents;
+        })
+    } else if (effect instanceof HandleFile) {
+        files.push(effect.fileName);                             // どうやって：files.push関数を使って
+        resume;
+    }
+}
+```
+
+## JavaScriptにおけるAlgebraic Effectsの考察
+
+考察については、[我々向けのAlgebraic Effects入門](https://overreacted.io/ja/Algebraic-Effects-for-the-rest-of-us/)の「関数に色はない」を参照されたい。
 
 # 参考
 
