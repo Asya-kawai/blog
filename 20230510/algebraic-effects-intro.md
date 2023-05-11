@@ -214,7 +214,7 @@ try {
 
 ## JavaScriptにおけるAlgebraic Effectsの考察
 
-考察については、[我々向けのAlgebraic Effects入門](https://overreacted.io/ja/Algebraic-Effects-for-the-rest-of-us/)の「関数に色はない」を参照されたい。
+考察については、[我々向けのAlgebraic Effects入門](https://overreacted.io/ja/algebraic-effects-for-the-rest-of-us/)の「関数に色はない」を参照されたい。
 
 # 参考
 
