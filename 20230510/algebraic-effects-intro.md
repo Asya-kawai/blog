@@ -218,7 +218,7 @@ try {
 
 # 参考
 
-* [我々向けのAlgebraic Effects入門](https://overreacted.io/ja/Algebraic-Effects-for-the-rest-of-us/)
+* [我々向けのAlgebraic Effects入門](https://overreacted.io/ja/algebraic-effects-for-the-rest-of-us/)
 * [Algebraic Effects for Functional Programming](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/08/algeff-tr-2016-v2.pdf)
 * [モナド](https://en.wikipedia.org/wiki/Monad_(functional_programming))
 * [第3章 モナド - Guppy](http://guppy.eng.kagawa-u.ac.jp/2007/HaskellKyoto/Text/Chapter3.pdf)
