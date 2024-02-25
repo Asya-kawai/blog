@@ -33,6 +33,19 @@ Angstromを利用できるように`./bin/dune`を以下のように修正する
  (libraries lambda_calculus angstrom))
 ```
 
+## コードのビルド
+
+duneを用いてコードをビルドするために下記コマンドを実行する。
+
+```
+dune build bin.main.exe
+```
+
+## コードを実行するには下記コマンドを実行する。
+
+```
+./_build/default/bin/main.exe
+```
 
 # 参考
 

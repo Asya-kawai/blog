@@ -3,7 +3,7 @@ Lambda Calculus | OCaml
 -----------------------
 x               | Var "x"
 f x             | App (Var "f", Var "x")
-Lambda(x).f x    | Lam ("x", App (Var "f", Var "x"))
+Lambda(x).f x   | Lam ("x", App (Var "f", Var "x"))
 *)
 type expr =
   | Var of string
@@ -40,10 +40,17 @@ module Parser = struct
     let ( let* ) = (>>=) in
     (* [p >>= f] creates a parser that will run [p], pass its result to [f], run
         the parser that [f] produces, and return its result. *)
+    (* let operator definition: https://v2.ocaml.org/manual/bindingops.html#ss:letop-examples *)
     let* l = parens_p expr_p in
     let* _ = char ' ' in
     let* r = parens_p expr_p in
     return (App (l, r))
+  (* Equal that.
+     ( let* ) (parens_p expr_p) (fun l ->
+         ( let* ) (char ' ') (fun _ ->
+             ( let* ) (parens_p expr_p) (fun r ->
+                 return (App (l, r)))))
+    *)
   (* [return v] creates a parser that will always succeed and return [v] *)
 
   let lam_p expr_p =
@@ -65,6 +72,7 @@ module Parser = struct
       [fix] is useful when constructing parsers for inductively-defined types
       such as sequences, trees, etc. Consider for example the implementation of
       the {!many} combinator defined in this library: *)
+
   (* The only two constructors that introduce new failure continuations are
    * [<?>] and [<|>]. If the initial input position is less than the length
    * of the committed input, then calling the failure continuation will
