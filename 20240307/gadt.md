@@ -1,10 +1,18 @@
 # GADTとは何であるか
 
 GADTとはGeneralized Algebraic Data Typesの略で、
+データコンストラクタによって型パラメータの制約を付与するまたは、
 データコンストラクタの引数に存在量化された型変数を持てるように一般化されたADTである。
 
 ```
-type any_list = Any: 'a list -> any_list
+type _ t = 
+| Int : int -> int t
+| Char : char -> char t
+```
+
+```
+type any_list =
+Any_list: 'a list -> any_list
 ```
 
 ## なぜGADTが必要か
@@ -13,8 +21,8 @@ ADTで複数のデータコンストラクタを取りうるデータ型は、�
 
 ```
 type t = 
-  | Int of int
-  | Char of char
+| Int of int
+| Char of char
 ```
 
 tについて値を取得するための多相的なget関数を定義しようとして以下のように書きたくなるが、
